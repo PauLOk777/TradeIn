@@ -1,0 +1,41 @@
+{
+  "name": "tradein",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "eslint .",
+    "dev": "nodemon",
+    "prettier": "prettier --config .prettierrc.json --write ./**/*.js",
+    "precommit": "npm run prettier && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PauLOk777/TradeIn.git"
+  },
+  "keywords": [
+    "game",
+    "money",
+    "currency",
+    "web",
+    "frontend",
+    "backend",
+    "nodeJS",
+    "Bootstrap4"
+  ],
+  "author": "PaulOk777",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PauLOk777/TradeIn/issues"
+  },
+  "homepage": "https://github.com/PauLOk777/TradeIn#readme",
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
