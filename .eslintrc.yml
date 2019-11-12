@@ -9,10 +9,6 @@ rules:
     - warn
     - tab
     - SwitchCase: 1
-      VariableDeclarator:
-        var: 2
-        let: 2
-        const: 3
       MemberExpression: 1
   semi:
     - warn
@@ -26,26 +22,26 @@ rules:
     - warn
     - global
   block-spacing:
-    - error
+    - warn
     - always
   brace-style:
     - error
     - 1tbs
     - allowSingleLine: true
   camelcase:
-    - error
+    - warn
   comma-style:
-    - error
+    - warn
     - last
   comma-spacing:
-    - error
+    - warn
     - before: false
       after: true
   func-call-spacing:
     - error
     - never
   key-spacing:
-    - error
+    - warn
     - beforeColon: false
       afterColon: true
       mode: minimum
@@ -146,10 +142,6 @@ rules:
   object-shorthand:
     - error
     - always
-  prefer-arrow-callback:
-    - error
-  prefer-const:
-    - error
   prefer-numeric-literals:
     - error
   template-curly-spacing:
