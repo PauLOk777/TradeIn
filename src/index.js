@@ -11,12 +11,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-	res.sendFile(path.join(__dirname, '..', 'public','SignIn.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'SignIn.html'));
 });
 
 app.get('/registration', function(req, res) {
-	res.sendFile(path.join(__dirname, '..', 'public','regist.html'));
-})
+    res.sendFile(path.join(__dirname, '..', 'public', 'regist.html'));
+});
 
 app.listen(PORT, function() {
     console.log(`>>> Server has been running at port ${PORT}.`);
