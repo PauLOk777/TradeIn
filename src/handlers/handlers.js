@@ -3,15 +3,37 @@ const path = require('path');
 const { addUser, checkUser } = require('../libs/users');
 
 function indexPage(req, res) {
-	res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
+	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
+	//status, account, mail, title, link
+	res.render('main.hbs', {
+		title: 'Home',
+		mail: 'Click',
+		account: '',
+		status: 'Sign In',
+		link: '/sign/in',
+	});
 }
 
 function signInPage(req, res) {
-	res.sendFile(path.join(__dirname, '..', '..', 'public', 'signIn.html'));
+	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'signIn.html'));
+	res.render('signIn.hbs', {
+		title: 'Sign In',
+		mail: 'Click',
+		account: '',
+		status: 'Sign Up',
+		link: '/sign/up',
+	});
 }
 
 function signUpPage(req, res) {
-	res.sendFile(path.join(__dirname, '..', '..', 'public', 'signUp.html'));
+	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'signUp.html'));
+	res.render('signUp.hbs', {
+		title: 'Sign Up',
+		mail: 'Click',
+		account: '',
+		status: 'Home',
+		link: '/',
+	});
 }
 
 async function signIn(req, res) {
@@ -20,7 +42,7 @@ async function signIn(req, res) {
 		const match = await checkUser(email, password);
 		if (match) {
 			res.status(200);
-			res.end('User was signed up!');
+			res.redirect('/');
 			//....
 		} else {
 			res.status(401);
@@ -38,7 +60,7 @@ async function signUp(req, res) {
 	try {
 		await addUser(username, email, password);
 		res.status(200);
-		res.end('User was added!');
+		res.redirect('/');
 		//....
 	} catch (err) {
 		console.error(err);

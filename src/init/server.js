@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { promisify } = require('util');
+const engine = require('../engine/engine');
 
 const router = require('../router/router');
 
@@ -15,6 +16,8 @@ const init = async function() {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use('/', router);
+
+	engine.init(app);
 
 	await promisify(app.listen).call(app, PORT);
 
