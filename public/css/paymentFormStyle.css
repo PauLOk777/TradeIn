@@ -1,0 +1,37 @@
+.centered {
+    /* or absolute */
+    top: 50%;
+}
+.credit-card-div span {
+    padding-top:10px;
+}
+.credit-card-div img {
+    padding-top:30px;
+}
+.credit-card-div .small-font {
+    font-size:9px;
+}
+.credit-card-div .pad-adjust {
+    padding-top:10px;
+}
+
+.mainInfo{
+    width: 100% ;
+    height: 100% ;
+    background-image: url("../public/img/img1532613761.png")
+}
+.anim-show{
+    opacity:0; /*Элемент полностью прозрачный (невидимый)*/
+    transition: 1s; /*Скорость перехода состояния элемента*/
+    animation: show 3s 1; /* Указываем название анимации, её время и количество повторов*/
+    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+    animation-delay: 1s; /* Задержка перед началом */
+}
+@keyframes show{
+    0%{
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
