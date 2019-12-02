@@ -1,13 +1,13 @@
-body{
+.body{
     background-color: #008080	;
 }
-a{
+.a{
     text-align:left;
     color:black;
     display: block;
 }
 
-a:hover{
+.a:hover{
     color:black;
     text-decoration: none;
 }
@@ -41,12 +41,12 @@ a:hover{
     height: 20rem;
 }
 
-ul {
+.ul {
     margin-left: 0;
     padding-left: 0;
 }
 
-li{
+.li{
     list-style-type: none;
     text-align: left;
     color:black;
@@ -54,11 +54,11 @@ li{
     margin-top:0.2rem;
 }
 
-li:hover{
+.li:hover{
     background-color:rgb(221, 217, 217);
 }
 
-input,.btn-success{
+.input,.btn-success{
     background-color:rgb(221, 217, 217);
     border: none;
     color: #0d0d0d;
@@ -85,11 +85,11 @@ input,.btn-success{
     color:white;
 }
 
-input:focus{
+.input:focus{
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
 }
 
-input::placeholder{
+.input::placeholder{
     color: #888888;
 }
