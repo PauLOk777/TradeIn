@@ -4,6 +4,7 @@ const { addUser, checkUser, findUser } = require('../libs/users');
 const { addSession, findSession, 
 	updateSignIn, updateLog } = require('../libs/sessions');
 const generateKey = require('../libs/random');
+const renderAuthorized = require('../libs/renderAuthorized');
 
 async function indexPage(req, res) {
 	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
@@ -20,26 +21,7 @@ async function indexPage(req, res) {
 		return;
 	}
 
-	const currentSession = await findSession(req.cookies.uniq_id);
-	const currentUser = await findUser(currentSession.email);
-	let statusLog;
-	let linkLog;
-
-	if (currentSession.log) {
-		statusLog = 'Sign Out';
-		linkLog = '/sign/out';
-	} else {
-		statusLog = 'Sign In';
-		linkLog = '/sign/in';	
-	}
-
-	res.render('main.hbs', {
-		title: 'Home',
-		mail: currentUser.email,
-		account: '/account',
-		status: statusLog,
-		link: linkLog,
-	});
+	await renderAuthorized(req, res, 'main.hbs','Home');
 }
 
 function signInPage(req, res) {
@@ -73,52 +55,63 @@ function signUpPage(req, res) {
 	});
 }
 
-function accountPage(req, res) {
+async function accountPage(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
 		return;
 	}
 }
 
-function depositPage(req, res) {
+async function depositPage(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
-		return
+		return;
 	}
+
+	await renderAuthorized(req, res, 'deposit.hbs','Deposit');
 }
 
-function tradePage(req, res) {
+async function tradePage(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
-		return
+		return;
 	}	
 }
 
-function currencyPage(req, res) {
+async function currencyPage(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
-		return
+		return;
 	}
 }
 
-function rulesPage(req, res) {
+async function rulesPage(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
-		return
+		return;
 	}
+
 }
 
-function deposit(req, res) {
+async function deposit(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
-		return
+		return;
 	}
+
+	const { money } = req.body;
+	const currentSession = await findSession(req.cookies.uniq_id);
+	const currentUser = await findUser(currentSession.email);
+	currentUser.money += money;
+	await currentUser.save();
+
+	res.redirect('/');
 }
 
 function trade(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
-		return
+		return;
 	}
 }
 
@@ -131,7 +124,6 @@ async function signIn(req, res) {
 
 		try {
 			const info = await updateSignIn(email, key);
-			console.dir(info);
 			const match = await checkUser(email, password);
 			if (match) {
 				res.status(200);

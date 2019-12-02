@@ -46,7 +46,7 @@ rules:
       afterColon: true
       mode: minimum
   keyword-spacing:
-    - error
+    - warn
     - before: true
       after: true
       overrides:
@@ -67,8 +67,6 @@ rules:
   new-parens:
     - error
   no-lonely-if:
-    - error
-  no-trailing-spaces:
     - error
   no-unneeded-ternary:
     - error
