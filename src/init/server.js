@@ -1,6 +1,7 @@
 // Modules
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const { promisify } = require('util');
 const engine = require('../engine/engine');
 
@@ -15,6 +16,7 @@ const init = async function() {
 	app.use(express.static('public'));
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
+	app.use(cookieParser());
 	app.use('/', router);
 
 	engine.init(app);

@@ -16,11 +16,18 @@ async function addUser(username, email, password) {
 
 async function checkUser(email, password) {
 	const user = await User.findOne({ email });
-	if (!user) { return false; }
+	if (!user) return false;
 	return argon2.verify(user.password, password);
+}
+
+async function findUser(email) {
+	const user = await User.findOne({ email });
+	if(!user) throw new Error('Invalid email');
+	return user;
 }
 
 module.exports = {
 	addUser,
-	checkUser
+	checkUser,
+	findUser
 };
