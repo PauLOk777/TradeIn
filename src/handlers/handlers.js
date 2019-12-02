@@ -7,12 +7,11 @@ const generateKey = require('../libs/random');
 const renderAuthorized = require('../libs/renderAuthorized');
 
 async function indexPage(req, res) {
-	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
 	//status, account, mail, title, link
 	if(!req.cookies.uniq_id) {
 		res.render('main.hbs', {
 			title: 'Home',
-			mail: 'Click',
+			mail: 'Main info menu',
 			account: '',
 			status: 'Sign In',
 			link: '/sign/in',
@@ -24,7 +23,6 @@ async function indexPage(req, res) {
 }
 
 function signInPage(req, res) {
-	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'signIn.html'));
 	if(req.cookies.uniq_id) {
 		res.redirect('/');
 		return;
@@ -32,7 +30,7 @@ function signInPage(req, res) {
 
 	res.render('signIn.hbs', {
 		title: 'Sign In',
-		mail: 'Click',
+		mail: 'Main info menu',
 		account: '',
 		status: 'Sign Up',
 		link: '/sign/up',
@@ -44,10 +42,10 @@ function signUpPage(req, res) {
 		res.redirect('/');
 		return;
 	}
-	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'signUp.html'));
+
 	res.render('signUp.hbs', {
 		title: 'Sign Up',
-		mail: 'Click',
+		mail: 'Main info menu',
 		account: '',
 		status: 'Home',
 		link: '/',
@@ -59,12 +57,20 @@ async function accountPage(req, res) {
 		res.redirect('/');
 		return;
 	}
+
+	const currentSession = await findSession(req.cookies.uniq_id);
+	const currentUser = await findUser(currentSession.email);
+	// username, user_email, money
+
 	res.render('account.hbs', {
 		title: 'Account',
-		mail: 'trocjuk200@gmail.com',
+		mail: currentUser.email,
 		account: 'Account',
 		status: 'Sign Out',
 		link: '/sign/out',
+		username: currentUser.username,
+		user_email: currentUser.email,
+		money: currentUser.money + '$'
 	});
 }
 
