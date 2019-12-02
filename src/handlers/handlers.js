@@ -9,7 +9,6 @@ const renderAuthorized = require('../libs/renderAuthorized');
 async function indexPage(req, res) {
 	//res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
 	//status, account, mail, title, link
-	console.log(req.cookies.uniq_id + ' home');
 	if(!req.cookies.uniq_id) {
 		res.render('main.hbs', {
 			title: 'Home',
@@ -60,6 +59,13 @@ async function accountPage(req, res) {
 		res.redirect('/');
 		return;
 	}
+	res.render('account.hbs', {
+		title: 'Account',
+		mail: 'trocjuk200@gmail.com',
+		account: 'Account',
+		status: 'Sign Out',
+		link: '/sign/out',
+	});
 }
 
 async function depositPage(req, res) {
@@ -75,7 +81,9 @@ async function tradePage(req, res) {
 	if(!req.cookies.uniq_id) {
 		res.redirect('/');
 		return;
-	}	
+	}
+
+	await renderAuthorized(req, res, 'trade.hbs','Trade');
 }
 
 async function currencyPage(req, res) {
@@ -83,6 +91,7 @@ async function currencyPage(req, res) {
 		res.redirect('/');
 		return;
 	}
+
 }
 
 async function rulesPage(req, res) {

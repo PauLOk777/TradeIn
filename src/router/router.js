@@ -13,11 +13,13 @@ router.get('/deposit', handlers.depositPage);
 router.get('/trade', handlers.tradePage);
 router.get('/currency', handlers.currencyPage);
 router.get('/rules', handlers.rulesPage);
+router.get('/trade', handlers.tradePage)
 router.get('/clear', (req, res) => res.clearCookie('uniq_id').redirect('/'));
 router.post('/deposit', handlers.deposit);
 router.post('/trade', handlers.trade);
 router.post('/sign/in', handlers.signIn);
 router.post('/sign/up', handlers.signUp);
+router.post('/trade', handlers.trade);
 router.get('/sign/out', handlers.signOut);
 
 module.exports = router;
