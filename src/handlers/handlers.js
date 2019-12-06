@@ -1,8 +1,18 @@
+// Modules
 const path = require('path');
 
-const { addUser, checkUser, findUser } = require('../libs/users');
-const { addSession, findSession, 
-	updateSignIn, updateLog } = require('../libs/sessions');
+// Models
+const User = require('../models/User');
+const Currency = require('../models/Currency');
+
+// Libs
+const { addUser,
+		checkUser,
+		findUser } = require('../libs/users');
+const { addSession,
+		findSession, 
+		updateSignIn,
+		updateLog } = require('../libs/sessions');
 const generateKey = require('../libs/random');
 const renderAuthorized = require('../libs/renderAuthorized');
 
@@ -185,6 +195,38 @@ async function signOut(req, res) {
 	res.clearCookie('uniq_id').redirect('/');
 }
 
+async function getCurrencies(req, res) {
+	const currencies = await Currency.find();
+	const response = {};
+	response.currencies = currencies.map((currency) => {
+		return {
+			name: currency.name,
+			cost: currency.cost
+		}
+	});
+	res.header('Content-Type', 'application/json');
+	res.end(JSON.stringify(response));
+}
+
+async function getUser(req, res) {
+	const { username } = req.query;
+	const user = await User.findOne({ username });
+	
+	res.header('Content-Type', 'application/json');
+	
+	if (!username || !user) {
+		// No username or user - send an empty json object
+		res.end(JSON.stringify({}));
+	} else {
+		const response = {
+			username: user.username,
+			email: user.email,
+			money: user.money
+		}
+		res.end(JSON.stringify(response));	
+	}
+}
+
 module.exports = {
 	indexPage,
 	signInPage,
@@ -198,5 +240,7 @@ module.exports = {
 	trade,
 	signIn,
 	signUp,
-	signOut	
+	signOut,
+	getCurrencies,
+	getUser
 };
