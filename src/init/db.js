@@ -94,7 +94,7 @@ async function addUsers() {
 	
 	try {
 		await user.save();
-	} catch (err){
+	} catch (err) {
 		console.error(err);
 		process.exit(1);
 	}

@@ -18,11 +18,11 @@ const UserSchema = new mongoose.Schema({
 				ref: 'currency',
 				required: true,
 				unique: true
-			 },
-			 amount: {
+			},
+			amount: {
 				type: Number,
 				required: true
-			 }
+			}
 		}],
 		required: true
 	}

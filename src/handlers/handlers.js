@@ -198,12 +198,12 @@ async function signOut(req, res) {
 async function getCurrencies(req, res) {
 	const currencies = await Currency.find();
 	const response = {};
-	response.currencies = currencies.map((currency) => {
-		return {
+	response.currencies = currencies.map(
+		(currency) => ({
 			name: currency.name,
 			cost: currency.cost
-		}
-	});
+		})
+	);
 	res.header('Content-Type', 'application/json');
 	res.end(JSON.stringify(response));
 }
