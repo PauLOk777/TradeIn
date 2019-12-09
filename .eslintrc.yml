@@ -73,7 +73,7 @@ rules:
     - error
     - always
   operator-linebreak:
-    - error
+    - warn
     - after
   semi-spacing:
     - error
