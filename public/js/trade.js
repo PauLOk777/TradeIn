@@ -13,20 +13,24 @@ function changeCurr(numOfCheck, currName) {
 function calculateCost() {
 	let from = document.getElementById('checkOne').innerHTML;
 	let to = document.getElementById('checkTwo').innerHTML;
+	let amount = document.getElementById('firstIn').value;
 
-}
+	let firstCurr = {};
+	let secondCurr = {};
 
-function block(numOfInput) {
-	if(numOfInput == 1) {
-		document.getElementById('firstIn').disabled = true;
-	} else {
-		document.getElementById('secondIn').disabled = true;
+	for (let curr of info) {
+		if (curr.name == from) {
+			firstCurr = curr;
+			continue;
+		}
+
+		if (curr.name == to) {
+			secondCurr = curr;
+		}
 	}
 
-	if(document.getElementById('firstIn').value == ''
-		&& document.getElementById('secondIn').value == '') {
-		console.log('HI');
-		document.getElementById('firstIn').disabled = false;
-		document.getElementById('secondIn').disabled = false;
-	}	
+	let koef = secondCurr.cost / firstCurr.cost;
+
+	document.getElementById('secondIn').setAttribute('placeholder', amount * koef);
+
 }
