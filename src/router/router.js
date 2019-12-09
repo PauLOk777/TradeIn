@@ -13,7 +13,7 @@ router.get('/deposit', handlers.depositPage);
 router.get('/trade', handlers.tradePage);
 router.get('/currency', handlers.currencyPage);
 router.get('/rules', handlers.rulesPage);
-router.get('/trade', handlers.tradePage)
+router.get('/trade', handlers.tradePage);
 router.get('/clear', (req, res) => res.clearCookie('uniq_id').redirect('/'));
 router.get('/sign/out', handlers.signOut);
 router.post('/deposit', handlers.deposit);

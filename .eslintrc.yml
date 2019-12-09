@@ -147,3 +147,5 @@ rules:
     - never
   require-atomic-updates:
     - off
+  no-undef:
+    - warn
