@@ -36,4 +36,7 @@ function calculateCost() {
     document
         .getElementById('secondIn')
         .setAttribute('placeholder', amount * koef);
+
+    document.getElementById('secretInputFirst').value = from;
+    document.getElementById('secretInputSecond').value = to;
 }

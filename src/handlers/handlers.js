@@ -169,10 +169,35 @@ async function trade(req, res) {
         return;
     }
 
-    console.log(req.body.from);
+    const { toName, fromName, fromAmount } = req.body;
     const currentSession = await findSession(req.cookies.uniq_id);
     const currentUser = await findUser(currentSession.email);
-    res.redirect('/trade');
+    
+    let fromCurr, fromIndex;
+    let toCurr, toIndex;
+
+    for (let i = 0; i < 5; i++) {
+    	let tempCurr = await Currency.findById(currentUser.money[i].currency);
+    	
+    	if(tempCurr.name == toName) {
+    		toCurr = tempCurr;
+    		toIndex = i;
+    	}
+    	
+    	if (tempCurr.name == fromName) {
+    		if (fromAmount > currentUser.money[i].amount)
+    			res.redirect('/trade');
+    		fromCurr = tempCurr;
+    		fromIndex = i;
+    	}
+    }
+
+    currentUser.money[fromIndex].amount -= fromAmount;
+    let amountOfSecondCurr = (fromCurr.cost / toCurr.cost) * fromAmount;
+    currentUser.money[toIndex].amount += amountOfSecondCurr;
+    await currentUser.save();
+    
+    res.redirect('/');
 }
 
 async function signIn(req, res) {
