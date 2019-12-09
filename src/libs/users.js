@@ -1,6 +1,7 @@
 const argon2 = require('argon2');
 
 const User = require('../models/User');
+const Currency = require('../models/Currency');
 
 async function addUser(username, email, password) {
 	const hash = await argon2.hash(password);
@@ -10,6 +11,15 @@ async function addUser(username, email, password) {
 		email,
 		password: hash
 	});
+
+	const currencies = await Currency,find();
+
+	for (const currency of currencies) {
+		user.money.push({
+			currency: currency._id,
+			amount: 0
+		});
+	}
 
 	await user.save();
 }
