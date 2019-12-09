@@ -29,7 +29,7 @@ function calculateCost() {
         }
     }
 
-    let koef = secondCurr.cost / firstCurr.cost;
+    let koef = firstCurr.cost / secondCurr.cost;
 
     document
         .getElementById('secondIn')
