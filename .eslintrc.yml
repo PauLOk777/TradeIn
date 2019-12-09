@@ -13,9 +13,6 @@ rules:
   semi:
     - warn
     - always
-  eqeqeq:
-    - error
-    - always
   no-loop-func:
     - error
   strict:
