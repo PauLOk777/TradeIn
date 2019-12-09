@@ -18,6 +18,9 @@ async function updateCurrencies() {
             minChangePerDay,
             chanceToIncrease,
         } = currency;
+
+        if (currency.name == 'USD') continue;
+
         const isIncrease = Math.random() <= chanceToIncrease;
         const change = isIncrease
             ? 1 + maxChangePerDay * FACTOR

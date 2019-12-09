@@ -11,10 +11,6 @@ async function main() {
     // !!! Запускать один раз !!!
     // Добавляет валюты в БД
     // await db.addCurrencies();
-
-    // НЕ ЗАПУСКАТЬ! МОЯ ФУНКЦИЯ
-    // ДЛЯ ТЕСТИРОВАНИЯ
-    // await db.addUsers();
 }
 
 main();

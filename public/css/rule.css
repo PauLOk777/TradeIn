@@ -2,17 +2,17 @@
 
 .block {
     font-family: 'Montserrat', sans-serif;
-    margin-top: 150px;
+    margin-top: 50px;
 }
 
-h1{
+h1.ruless{
     text-align: center;
 }
 
 .rules{
     margin-top: 95px;
 }
-li{
+li.ruless{
     font-size: 15px;
     margin-top: 23px;
 }

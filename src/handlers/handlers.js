@@ -79,8 +79,19 @@ async function accountPage(req, res) {
 
     let strMoney = '';
     for (let i = 1; i < 5; i++) {
+        let amountStr = '';
+        let temp = '';
+        temp += currentUser.money[i].amount;
+        if (temp.length > 9) {
+            for (let i = 0; i < 9; i++) {
+                amountStr += temp[i];
+            }
+        } else {
+            amountStr = currentUser.money[i].amount;
+        }
+
         strMoney +=
-            currencies[i].name + ': ' + currentUser.money[i].amount + '; ';
+            currencies[i].name + ': ' + amountStr + '; ';
     }
 
     // username, user_email, money
@@ -134,18 +145,13 @@ async function tradePage(req, res) {
     });
 }
 
-async function currencyPage(req, res) {
-    if (!req.cookies.uniq_id) {
-        res.redirect('/');
-        return;
-    }
-}
-
 async function rulesPage(req, res) {
     if (!req.cookies.uniq_id) {
         res.redirect('/');
         return;
     }
+
+    await renderAuthorized(req, res, 'rules.hbs', 'Rules');
 }
 
 async function deposit(req, res) {
@@ -185,8 +191,10 @@ async function trade(req, res) {
     	}
     	
     	if (tempCurr.name == fromName) {
-    		if (fromAmount > currentUser.money[i].amount)
+    		if (fromAmount > currentUser.money[i].amount) {
     			res.redirect('/trade');
+                return;  
+            }
     		fromCurr = tempCurr;
     		fromIndex = i;
     	}
@@ -254,6 +262,47 @@ async function signOut(req, res) {
     res.clearCookie('uniq_id').redirect('/');
 }
 
+async function currencyPage(req, res) {
+    let numOfCurr = req.params.id;
+    const currentSession = await findSession(req.cookies.uniq_id);
+    const currentUser = await findUser(currentSession.email);
+    const tempCurr = await Currency.findById(currentUser.money[numOfCurr].currency);
+
+    let strMoney = '';
+    let amountStr = '';
+    let costStr = '';
+    let tempCost = '';
+    tempCost += tempCurr.cost;
+    let temp = '';
+    temp += currentUser.money[numOfCurr].amount;
+    if (temp.length > 9) {
+        for (let i = 0; i < 9; i++) {
+            amountStr += temp[i];
+        }
+    } else {
+        amountStr = currentUser.money[numOfCurr].amount;
+    }
+
+    if(tempCost.length > 9) {
+        for (let i = 0; i < 9; i++) {
+            costStr += tempCost[i];
+        }
+    } else {
+        costStr = tempCurr.cost;
+    }
+    
+    res.render('currency.hbs', {
+        title: tempCurr.name,
+        mail: currentUser.email,
+        account: 'Account',
+        status: 'Sign Out',
+        link: '/sign/out',
+        nameCurr: tempCurr.name,
+        userCurr: amountStr,
+        cost: costStr
+    });
+}
+
 module.exports = {
     indexPage,
     signInPage,
@@ -268,4 +317,5 @@ module.exports = {
     signIn,
     signUp,
     signOut,
+    currencyPage
 };
