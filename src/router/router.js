@@ -16,8 +16,6 @@ router.get('/rules', handlers.rulesPage);
 router.get('/trade', handlers.tradePage)
 router.get('/clear', (req, res) => res.clearCookie('uniq_id').redirect('/'));
 router.get('/sign/out', handlers.signOut);
-router.get('/get/currencies', handlers.getCurrencies);
-router.get('/get/user', handlers.getUser);
 router.post('/deposit', handlers.deposit);
 router.post('/trade', handlers.trade);
 router.post('/sign/in', handlers.signIn);

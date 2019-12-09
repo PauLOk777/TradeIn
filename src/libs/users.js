@@ -12,7 +12,7 @@ async function addUser(username, email, password) {
 		password: hash
 	});
 
-	const currencies = await Currency,find();
+	const currencies = await Currency.find();
 
 	for (const currency of currencies) {
 		user.money.push({

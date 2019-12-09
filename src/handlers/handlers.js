@@ -70,6 +70,18 @@ async function accountPage(req, res) {
 
 	const currentSession = await findSession(req.cookies.uniq_id);
 	const currentUser = await findUser(currentSession.email);
+	const currencies = [];
+	
+	for(let i = 0; i < 5; i++) {
+		let temp = await Currency.findById(currentUser.money[i].currency);
+		currencies.push(temp);
+	}
+
+	let strMoney = '';
+	for(let i = 1; i < 5; i++) {
+		strMoney += currencies[i].name + ': ' + currentUser.money[i].amount + '; ';
+	}
+
 	// username, user_email, money
 
 	res.render('account.hbs', {
@@ -80,7 +92,8 @@ async function accountPage(req, res) {
 		link: '/sign/out',
 		username: currentUser.username,
 		user_email: currentUser.email,
-		money: currentUser.money + '$'
+		money: currentUser.money[0].amount + '$',
+		currency: strMoney
 	});
 }
 
@@ -127,7 +140,7 @@ async function deposit(req, res) {
 	const { money } = req.body;
 	const currentSession = await findSession(req.cookies.uniq_id);
 	const currentUser = await findUser(currentSession.email);
-	currentUser.money += money;
+	currentUser.money[0].amount += money;
 	await currentUser.save();
 
 	res.redirect('/');
@@ -138,6 +151,8 @@ function trade(req, res) {
 		res.redirect('/');
 		return;
 	}
+
+	
 }
 
 async function signIn(req, res) {
@@ -195,38 +210,6 @@ async function signOut(req, res) {
 	res.clearCookie('uniq_id').redirect('/');
 }
 
-async function getCurrencies(req, res) {
-	const currencies = await Currency.find();
-	const response = {};
-	response.currencies = currencies.map(
-		(currency) => ({
-			name: currency.name,
-			cost: currency.cost
-		})
-	);
-	res.header('Content-Type', 'application/json');
-	res.end(JSON.stringify(response));
-}
-
-async function getUser(req, res) {
-	const { username } = req.query;
-	const user = await User.findOne({ username });
-	
-	res.header('Content-Type', 'application/json');
-	
-	if (!username || !user) {
-		// No username or user - send an empty json object
-		res.end(JSON.stringify({}));
-	} else {
-		const response = {
-			username: user.username,
-			email: user.email,
-			money: user.money
-		}
-		res.end(JSON.stringify(response));	
-	}
-}
-
 module.exports = {
 	indexPage,
 	signInPage,
@@ -241,6 +224,4 @@ module.exports = {
 	signIn,
 	signUp,
 	signOut,
-	getCurrencies,
-	getUser
 };
