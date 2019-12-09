@@ -73,36 +73,7 @@ async function addCurrencies() {
 	console.error('>>> Currencies were added');
 }
 
-async function addUsers() {
-	const usd = await Currency.findOne({ name: /usd/i });
-	const paul = await Currency.findOne({ name: /paul/i });
-	const user = new User({
-		username: 'fil',
-		email: 'alexfilatov@gmail.com',
-		password: 'agron2hashed',
-		money: [
-			{
-				currency: usd._id,
-				amount: 0
-			},
-			{
-				currency: paul._id,
-				amount: 0
-			}
-		]
-	});
-	
-	try {
-		await user.save();
-	} catch (err) {
-		console.error(err);
-		process.exit(1);
-	}
-	console.error('>>> Users were added');
-}
-
 module.exports = {
 	init,
 	addCurrencies,
-	addUsers
 };

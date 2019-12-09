@@ -111,8 +111,26 @@ async function tradePage(req, res) {
 		res.redirect('/');
 		return;
 	}
+	const currentSession = await findSession(req.cookies.uniq_id);
+	const currentUser = await findUser(currentSession.email);
 
-	await renderAuthorized(req, res, 'trade.hbs','Trade');
+	let currencies = [];
+	
+	for(let i = 0; i < 5; i++) {
+		let temp = await Currency.findById(currentUser.money[i].currency);
+		currencies.push(temp);
+	}	
+
+	currencies = JSON.stringify(currencies);
+
+	res.render('trade.hbs', {
+		title: 'Trade',
+		mail: currentUser.email,
+		account: 'Account',
+		status: 'Sign Out',
+		link: '/sign/out',
+		cost: currencies
+	});
 }
 
 async function currencyPage(req, res) {
@@ -152,7 +170,7 @@ function trade(req, res) {
 		return;
 	}
 
-	
+
 }
 
 async function signIn(req, res) {

@@ -15,28 +15,33 @@
                         <div class="card-body mt-2">
                             <div class="form-group form-inline d-flex justify-content-center">
                                 <div class="input-group mr-2 mb-1">
-                                    <input type="text" class="form-control" placeholder="1.345">
+                                    <input type="text" class="form-control" id="firstIn" placeholder="0.0" onkeyup="calculateCost(); block(2);" enabled">
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-info btn-lighten-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" class="btn btn-info btn-lighten-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="checkOne">
                                             FIL
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Fil</a>
-                                            <a class="dropdown-item" href="#">Kemarka</a>
-                                            <a class="dropdown-item" href="#">Troz</a>
-                                            <a class="dropdown-item" href="#">YARIKI</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(1, 'USD');">USD</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(1, 'FIL');">FIL</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(1, 'KEMARKA');">KEMARKA</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(1, 'TROZ');">TROZ</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(1, 'YARIK');">YARIK</a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="input-group mr-2 mb-1">
-                                    <input type="text" class="form-control" placeholder="230.00">
+                                    <input type="text" class="form-control" id="secondIn" placeholder="0.0" onkeyup="calculateCost(); block(1);" enabled>
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-info btn-lighten-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" class="btn btn-info btn-lighten-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="checkTwo">
                                             USD
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="crypto-currency-exchange.html#">USD</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(2, 'USD');">USD</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(2, 'FIL');">FIL</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(2, 'KEMARKA');">KEMARKA</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(2, 'TROZ');">TROZ</a>
+                                            <a class="dropdown-item" href="#" onclick="changeCurr(2, 'YARIK');">YARIK</a>
                                         </div>
                                     </div>
                                 </div>
@@ -53,5 +58,6 @@
         </div>
 
     </div>
-
+    <span id="cost" style="display: none;">{{cost}}</span>
 </div>
+<script src="/js/trade.js"></script>
