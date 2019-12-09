@@ -49,7 +49,7 @@ async function addCurrencies() {
             chanceToIncrease: 0.88,
         },
         {
-            name: 'PAUL',
+            name: 'TROZ',
             cost: 253,
             maxChangePerDay: 12,
             minChangePerDay: 0.01,
