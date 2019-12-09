@@ -15,16 +15,18 @@ function calculateCost() {
     let to = document.getElementById('checkTwo').innerHTML;
     let amount = document.getElementById('firstIn').value;
 
+    console.log(from);
+
     let firstCurr = {};
     let secondCurr = {};
 
     for (let curr of info) {
-        if (curr.name == from) {
+    	if (curr.name == from) {
             firstCurr = curr;
-            continue;
         }
 
         if (curr.name == to) {
+            console.log(curr);
             secondCurr = curr;
         }
     }

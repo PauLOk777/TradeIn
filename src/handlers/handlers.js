@@ -163,11 +163,16 @@ async function deposit(req, res) {
     res.redirect('/');
 }
 
-function trade(req, res) {
+async function trade(req, res) {
     if (!req.cookies.uniq_id) {
         res.redirect('/');
         return;
     }
+
+    console.log(req.body.from);
+    const currentSession = await findSession(req.cookies.uniq_id);
+    const currentUser = await findUser(currentSession.email);
+    res.redirect('/trade');
 }
 
 async function signIn(req, res) {
