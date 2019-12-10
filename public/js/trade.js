@@ -21,7 +21,7 @@ function calculateCost() {
     let secondCurr = {};
 
     for (let curr of info) {
-    	if (curr.name == from) {
+        if (curr.name == from) {
             firstCurr = curr;
         }
 

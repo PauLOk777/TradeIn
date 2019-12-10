@@ -24,7 +24,7 @@ async function updateCurrencies() {
         const isIncrease = Math.random() <= chanceToIncrease;
         const change = isIncrease
             ? 1 + maxChangePerDay * FACTOR
-            : 1 - (1  / minChangePerDay) * FACTOR;
+            : 1 - (1 / minChangePerDay) * FACTOR;
         currency.cost *= change;
         await currency.save();
     }

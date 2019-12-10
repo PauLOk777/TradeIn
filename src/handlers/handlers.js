@@ -90,8 +90,7 @@ async function accountPage(req, res) {
             amountStr = currentUser.money[i].amount;
         }
 
-        strMoney +=
-            currencies[i].name + ': ' + amountStr + '; ';
+        strMoney += currencies[i].name + ': ' + amountStr + '; ';
     }
 
     // username, user_email, money
@@ -178,33 +177,33 @@ async function trade(req, res) {
     const { toName, fromName, fromAmount } = req.body;
     const currentSession = await findSession(req.cookies.uniq_id);
     const currentUser = await findUser(currentSession.email);
-    
+
     let fromCurr, fromIndex;
     let toCurr, toIndex;
 
     for (let i = 0; i < 5; i++) {
-    	let tempCurr = await Currency.findById(currentUser.money[i].currency);
-    	
-    	if(tempCurr.name == toName) {
-    		toCurr = tempCurr;
-    		toIndex = i;
-    	}
-    	
-    	if (tempCurr.name == fromName) {
-    		if (fromAmount > currentUser.money[i].amount) {
-    			res.redirect('/trade');
-                return;  
+        let tempCurr = await Currency.findById(currentUser.money[i].currency);
+
+        if (tempCurr.name == toName) {
+            toCurr = tempCurr;
+            toIndex = i;
+        }
+
+        if (tempCurr.name == fromName) {
+            if (fromAmount > currentUser.money[i].amount) {
+                res.redirect('/trade');
+                return;
             }
-    		fromCurr = tempCurr;
-    		fromIndex = i;
-    	}
+            fromCurr = tempCurr;
+            fromIndex = i;
+        }
     }
 
     currentUser.money[fromIndex].amount -= fromAmount;
     let amountOfSecondCurr = (fromCurr.cost / toCurr.cost) * fromAmount;
     currentUser.money[toIndex].amount += amountOfSecondCurr;
     await currentUser.save();
-    
+
     res.redirect('/');
 }
 
@@ -266,7 +265,9 @@ async function currencyPage(req, res) {
     let numOfCurr = req.params.id;
     const currentSession = await findSession(req.cookies.uniq_id);
     const currentUser = await findUser(currentSession.email);
-    const tempCurr = await Currency.findById(currentUser.money[numOfCurr].currency);
+    const tempCurr = await Currency.findById(
+        currentUser.money[numOfCurr].currency
+    );
 
     let strMoney = '';
     let amountStr = '';
@@ -283,14 +284,14 @@ async function currencyPage(req, res) {
         amountStr = currentUser.money[numOfCurr].amount;
     }
 
-    if(tempCost.length > 9) {
+    if (tempCost.length > 9) {
         for (let i = 0; i < 9; i++) {
             costStr += tempCost[i];
         }
     } else {
         costStr = tempCurr.cost;
     }
-    
+
     res.render('currency.hbs', {
         title: tempCurr.name,
         mail: currentUser.email,
@@ -299,7 +300,7 @@ async function currencyPage(req, res) {
         link: '/sign/out',
         nameCurr: tempCurr.name,
         userCurr: amountStr,
-        cost: costStr
+        cost: costStr,
     });
 }
 
@@ -316,6 +317,5 @@ module.exports = {
     trade,
     signIn,
     signUp,
-    signOut,
-    currencyPage
+    signOut
 };
