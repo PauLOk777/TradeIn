@@ -263,25 +263,37 @@ async function signOut(req, res) {
 
 async function currencyPage(req, res) {
     let numOfCurr = req.params.id;
-    const currentSession = await findSession(req.cookies.uniq_id);
-    const currentUser = await findUser(currentSession.email);
-    const tempCurr = await Currency.findById(
-        currentUser.money[numOfCurr].currency
-    );
+    let nameOfCurr = req.params.name;
+
+    const tempCurr = await Currency.findOne({ name: nameOfCurr });
 
     let strMoney = '';
     let amountStr = '';
     let costStr = '';
     let tempCost = '';
+    let tempAmount = '';
+    let email = 'Main info menu';
+
     tempCost += tempCurr.cost;
-    let temp = '';
-    temp += currentUser.money[numOfCurr].amount;
-    if (temp.length > 9) {
+    
+    if (req.cookies.uniq_id) {
+        const currentSession = await findSession(req.cookies.uniq_id);
+        const currentUser = await findUser(currentSession.email);
+        tempAmount += currentUser.money[numOfCurr].amount;
+        email = currentUser.name;
+    } else {
+        tempAmount = 0;
+    }
+    
+
+    
+    
+    if (tempAmount.length > 9) {
         for (let i = 0; i < 9; i++) {
-            amountStr += temp[i];
+            amountStr += tempAmount[i];
         }
     } else {
-        amountStr = currentUser.money[numOfCurr].amount;
+        amountStr = tempAmount;
     }
 
     if (tempCost.length > 9) {
@@ -294,7 +306,7 @@ async function currencyPage(req, res) {
 
     res.render('currency.hbs', {
         title: tempCurr.name,
-        mail: currentUser.email,
+        mail: email,
         account: 'Account',
         status: 'Sign Out',
         link: '/sign/out',
